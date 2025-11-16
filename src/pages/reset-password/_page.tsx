@@ -14,16 +14,16 @@ export default function ResetPasswordPage() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const { showToast } = useToast();
+  const { toast } = useToast();
 
   const token = searchParams.get('token');
 
   const handleSubmit = async (data: ResetPasswordSchema) => {
     if (!token) {
-      showToast({
+      toast({
         title: 'Error',
         description: 'Invalid or missing reset token',
-        variant: 'destructive',
+        variant: 'danger',
       });
       return;
     }
@@ -36,7 +36,7 @@ export default function ResetPasswordPage() {
       });
 
       setIsSuccess(true);
-      showToast({
+      toast({
         title: 'Success',
         description: 'Password reset successfully',
         variant: 'default',
@@ -48,10 +48,10 @@ export default function ResetPasswordPage() {
       }, 2000);
     } catch (error) {
       const errorMessage = getErrorMessage(error);
-      showToast({
+      toast({
         title: 'Error',
         description: errorMessage,
-        variant: 'destructive',
+        variant: 'danger',
       });
     } finally {
       setIsLoading(false);

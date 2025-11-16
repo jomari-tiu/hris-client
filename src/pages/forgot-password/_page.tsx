@@ -12,7 +12,7 @@ import ForgotPasswordForm from './components/ForgotPasswordForm';
 export default function ForgotPasswordPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const { showToast } = useToast();
+  const { toast } = useToast();
 
   const handleSubmit = async (data: ForgotPasswordSchema) => {
     try {
@@ -20,17 +20,17 @@ export default function ForgotPasswordPage() {
       const response = await authApi.forgotPassword(data);
 
       setIsSuccess(true);
-      showToast({
+      toast({
         title: 'Success',
         description: response.message || 'Password reset instructions sent to your email',
         variant: 'default',
       });
     } catch (error) {
       const errorMessage = getErrorMessage(error);
-      showToast({
+      toast({
         title: 'Error',
         description: errorMessage,
-        variant: 'destructive',
+        variant: 'danger',
       });
     } finally {
       setIsLoading(false);

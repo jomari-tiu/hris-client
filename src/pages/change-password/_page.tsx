@@ -12,7 +12,7 @@ import ChangePasswordForm from './components/ChangePasswordForm';
 
 export default function ChangePasswordPage() {
   const [isLoading, setIsLoading] = useState(false);
-  const { showToast } = useToast();
+  const { toast } = useToast();
   const { logout } = useAuth();
   const navigate = useNavigate();
 
@@ -24,7 +24,7 @@ export default function ChangePasswordPage() {
         newPassword: data.newPassword,
       });
 
-      showToast({
+      toast({
         title: 'Success',
         description: 'Password changed successfully. Please login again.',
         variant: 'default',
@@ -37,10 +37,10 @@ export default function ChangePasswordPage() {
       }, 1500);
     } catch (error) {
       const errorMessage = getErrorMessage(error);
-      showToast({
+      toast({
         title: 'Error',
         description: errorMessage,
-        variant: 'destructive',
+        variant: 'danger',
       });
     } finally {
       setIsLoading(false);

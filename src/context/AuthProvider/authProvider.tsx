@@ -10,7 +10,7 @@ const AUTH_USER_KEY = 'auth_user';
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { showToast } = useToast();
+  const { toast } = useToast();
 
   // Initialize auth state from localStorage
   useEffect(() => {
@@ -56,24 +56,24 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         setUser(response.user);
 
-        showToast({
+        toast({
           title: 'Success',
           description: 'Logged in successfully',
           variant: 'default',
         });
       } catch (error) {
         const errorMessage = getErrorMessage(error);
-        showToast({
+        toast({
           title: 'Login Failed',
           description: errorMessage,
-          variant: 'destructive',
+          variant: 'danger',
         });
         throw error;
       } finally {
         setIsLoading(false);
       }
     },
-    [showToast]
+    [toast]
   );
 
   // Logout function
@@ -87,7 +87,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       localStorage.removeItem(AUTH_USER_KEY);
       setUser(null);
 
-      showToast({
+      toast({
         title: 'Success',
         description: 'Logged out successfully',
         variant: 'default',
@@ -103,7 +103,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     } finally {
       setIsLoading(false);
     }
-  }, [showToast]);
+  }, [toast]);
 
   // Update user function
   const updateUser = useCallback((updatedUser: User) => {

@@ -65,9 +65,15 @@ const AppRoutes = () => {
 
         {/* Role-based Routes */}
         {user &&
-          appRoutes[user.role as keyof typeof appRoutes]?.map((route) => (
-            <Route key={route.path} path={route.path} element={route.element} />
-          ))}
+          appRoutes[user.role as keyof typeof appRoutes]?.map(
+            (route: { path: string; element: JSX.Element }) => (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={route.element}
+              />
+            )
+          )}
 
         {/* 404 Page */}
         <Route

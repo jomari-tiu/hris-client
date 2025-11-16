@@ -12,12 +12,16 @@ import {
   FieldValues,
 } from 'react-hook-form';
 import { Input, Text } from '../ui';
+import { InputHTMLAttributes } from 'react';
 
 type InputFieldProps<T extends FieldValues> = {
   name: FieldPath<T>;
   label?: string;
   placeholder?: string;
   type?: string;
+  autoComplete?: InputHTMLAttributes<HTMLInputElement>['autoComplete'];
+  disabled?: boolean;
+  readOnly?: boolean;
 };
 
 export const FormInput = <T extends FieldValues>({
@@ -25,6 +29,9 @@ export const FormInput = <T extends FieldValues>({
   label,
   placeholder,
   type = 'text',
+  autoComplete,
+  disabled,
+  readOnly,
 }: InputFieldProps<T>) => {
   const { control } = useFormContext();
 
@@ -46,6 +53,9 @@ export const FormInput = <T extends FieldValues>({
               {...field}
               type={type}
               placeholder={placeholder}
+              autoComplete={autoComplete}
+              disabled={disabled}
+              readOnly={readOnly}
               className={`w-full rounded border p-2 ${
                 fieldState.error ? 'border-red-500' : 'border-gray-300'
               }`}
